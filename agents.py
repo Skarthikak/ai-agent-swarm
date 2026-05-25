@@ -1,15 +1,24 @@
+import os
 from crewai import Agent, Task, Crew, Process
-from crewai_tools import SerperDevTool
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.tools import DuckDuckGoSearchRun
+
+# Initialize Gemini (This is your Brain)
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash", # Fast and capable
+    google_api_key=os.environ.get("AIzaSyAxLFrgc_vlVPuCPP_0Hd256y3oMiWvPIw")
+)
+
+# Search tool
+search_tool = DuckDuckGoSearchRun()
 
 def run_swarm(user_input):
-    search_tool = SerperDevTool()
-    
-    # Define your agent
     analyst = Agent(
         role='Analyst',
         goal='Research the topic provided',
         backstory='Expert researcher.',
-        tools=[search_tool]
+        tools=[search_tool],
+        llm=llm
     )
 
     task = Task(
