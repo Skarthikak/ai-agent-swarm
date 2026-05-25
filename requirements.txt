@@ -2,4 +2,5 @@ fastapi
 uvicorn
 crewai
 crewai-tools
-langchain-openai
+langchain-google-genai
+duckduckgo-search
